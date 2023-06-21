@@ -8,7 +8,7 @@ const AddNote = () => {
   let [note, setNote] = useState({
     title: "",
     content: "",
-    tag: "default"
+    tag: ""
   });
 
   function handleChange(e) {
@@ -25,23 +25,27 @@ const AddNote = () => {
     <div>
       <form >
         <div className="mb-3 col-md-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">Title</label>
-          <input type="text" name='title' value={note.title} onChange={handleChange} className="form-control" />
+          <label htmlFor="Title" className="form-label">Title</label>
+          <input type="text" name='title' value={note.title} onChange={handleChange} className="form-control" placeholder='Should be atleast 5 characters long' />
         </div>
         <div className="mb-3 col-md-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">Description</label>
-          <textarea type="text" name='content' value={note.content} onChange={handleChange} className="form-control" />
+          <label htmlFor="Description" className="form-label">Description</label>
+          <textarea type="text" name='content' value={note.content} onChange={handleChange} className="form-control" placeholder='Should be atleast 5 characters long' />
         </div>
-        <button type="submit" className="btn" onClick={(e) => {
+        <div className="mb-3 col-md-3">
+          <label htmlFor="Tag" className="form-label">Tag</label>
+          <input type="text" name='tag' value={note.tag} onChange={handleChange} className="form-control" />
+        </div>
+        <button disabled={note.title.length<5 || note.content.length<5} type="submit" className="btn btn-outline-primary" onClick={(e) => {
           
           addNote(note);
           setNote({
             title: "",
             content: "",
-            tag: "default"
+            tag: ""
           });
           e.preventDefault();
-        }}><i className="fa-solid fa-circle-plus"></i></button>
+        }}>Add Note</button>
       </form>
     </div>
   )
