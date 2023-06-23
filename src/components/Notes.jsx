@@ -5,37 +5,37 @@ import { useNavigate } from 'react-router-dom';
 
 const Notes = () => {
     const context = useContext(NoteContext);
-    const { notes, fetchNotes, editNote} = context;
+    const { notes, fetchNotes, editNote } = context;
     const ref = useRef(null);
     const refClose = useRef(null);
     let Navigate = useNavigate();
     let [eNote, setNote] = useState({
-        id:"",
+        id: "",
         eTitle: "",
         eContent: "",
         eTag: ""
     });
 
     useEffect(() => {
-        if(localStorage.getItem('authToken')){
+        if (localStorage.getItem('authToken')) {
             fetchNotes();
         }
-        else{
+        else {
             Navigate('/login');
         }
         // eslint-disable-next-line
     }, [])
 
-    
+
 
     const updateNote = (currentNote) => {
-        setNote({id:currentNote._id, eTitle:currentNote.title, eContent:currentNote.content, eTag:currentNote.tag});
+        setNote({ id: currentNote._id, eTitle: currentNote.title, eContent: currentNote.content, eTag: currentNote.tag });
         ref.current.click();
     }
 
-    
 
-    const handleChange = (e)=>{
+
+    const handleChange = (e) => {
         let { name, value } = e.target;
         setNote((prevValue) => {
             return (eNote = {
@@ -45,7 +45,7 @@ const Notes = () => {
         })
     }
 
-    const handleClick = ()=>{
+    const handleClick = () => {
         editNote(eNote.id, eNote.eTitle, eNote.eContent, eNote.eTag);
         refClose.current.click();
     }
@@ -81,7 +81,7 @@ const Notes = () => {
                         </div>
                         <div className="modal-footer">
                             <button ref={refClose} type="button" className="btn btn-secondary d-none" data-bs-dismiss="modal">Discard changes</button>
-                            <button disabled={eNote.eTitle.length<5 || eNote.eContent.length<5} type="button" className="btn btn-outline-primary" onClick={handleClick}>Save changes</button>
+                            <button disabled={eNote.eTitle.length < 5 || eNote.eContent.length < 5} type="button" className="btn btn-outline-primary" onClick={handleClick}>Save changes</button>
                         </div>
                     </div>
                 </div>
@@ -90,12 +90,13 @@ const Notes = () => {
                 <h2>Your Notes</h2>
                 <hr />
                 <div className="container">
-                    {notes.length===0 && ' You do not have any notes'}
+                    {notes.length === 0 && ' You do not have any notes'}
                 </div>
+                
                 {notes.map((note) => {
-                    return <NoteItem key={note._id} note={note} updateNote={updateNote} />
+                        return <NoteItem key={note._id} note={note} updateNote={updateNote} />
+                    
                 })}
-
             </div>
         </>
     )

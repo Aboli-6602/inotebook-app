@@ -1,25 +1,48 @@
-import React from 'react'
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import React, { useState, useContext} from 'react'
+import {Link, useLocation, useNavigate} from "react-router-dom"
+import NoteContext from '../context/notes/noteContext'
+
 
 const Navbar = () => {
   let location = useLocation();
   let Navigate = useNavigate();
+  let [searchTag, setSearchTag] = useState("");
+  const context = useContext(NoteContext);
+  const {notes, setNotes} = context;
+
   const handleLogout = ()=>{
     localStorage.removeItem("authToken");
     Navigate("/login");
   }
 
+  const handleChange = (e)=>{
+    setSearchTag(e.target.value);
+    
+  }
+
+  const handleSearch = (e)=>{
+    e.preventDefault();
+    {
+      setNotes(() => {
+          return notes.filter((note) => {
+              return (note.tag === searchTag);
+          })
+      })
+  }
+    
+  }
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
     <div className="container-fluid">
-    <Link className="navbar-brand" to="/">iNotebook</Link>
+    <Link className="navbar-brand" to="/home">iNotebook</Link>
     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span className="navbar-toggler-icon"></span>
     </button>
     <div className="collapse navbar-collapse" id="navbarSupportedContent">
       <ul className="navbar-nav me-auto mb-2 mb-lg-0">
         <li className="nav-item">
-          <Link className={`nav-link ${location.pathname==="/" ? "active" : ""}`} aria-current="page" to="/">Home</Link>
+        {localStorage.getItem('authToken') && <Link className={`nav-link ${location.pathname==="/" ? "active" : ""}`} aria-current="page" to="/">Home</Link>}
         </li>
         <li className="nav-item">
           <Link className={`nav-link ${location.pathname==="/about" ? "active" : ""}`} to="/about">About</Link>
@@ -31,10 +54,10 @@ const Navbar = () => {
       <Link type="button" className={`btn btn-outline-secondary mx-1 ${location.pathname==="/login" ? "active" : ""}`} to="/login">Login</Link>
       <Link type="button" className={`btn btn-outline-secondary mx-1 ${location.pathname==="/signup" ? "active" : ""}`} to="/signup">Signup</Link>
       </form>}
-      <form className="d-flex" role="search">
-        <input className="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+      {localStorage.getItem('authToken') && <form onSubmit={handleSearch} className="d-flex" role="search">
+        <input name='searchTag' value={searchTag} onChange={handleChange} className="form-control me-2" type="search" placeholder="Search by Tag" aria-label="Search" />
         <button className="btn btn-outline-success" type="submit">Search</button>
-      </form>
+      </form>}
     </div>
   </div>
 </nav>

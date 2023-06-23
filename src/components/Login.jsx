@@ -42,9 +42,10 @@ const Login = () => {
     }
 
     return (
-        <div className='container'>
-            <form onSubmit={handleSubmit}>
-                <div className="mb-3">
+        <div className='container my-3'>
+        <h2>Login to iNotebook</h2>
+            <form className='my-4' onSubmit={handleSubmit}>
+                <div className="my-3">
                     <label htmlFor="email" className="form-label">Email address</label>
                     <input name="email" value={credentials.email} onChange={handleChange} type="email" className="form-control" aria-describedby="emailHelp" />
                     <div className="form-text">We'll never share your email with anyone else.</div>

@@ -6,11 +6,6 @@ const NoteItem = (props) => {
     const context = useContext(NoteContext);
     const {deleteNote} = context;
 
-    // function editNote(){
-    //     <EditNote title={note.title} content={note.content}/>
-    //     console.log("edit note");
-    // }
-
 
 
     return (
@@ -18,6 +13,7 @@ const NoteItem = (props) => {
             <div className="card">
                 <div value={note._id} className="card-body">
                     <h5 className="card-title">{note.title}</h5>
+                    <span class="badge text-bg-secondary">{note.tag}</span>
                     <p className="card-text">{note.content}</p>
                     <i className="fa-solid fa-pen mx-3" onClick={(e)=>{
                         updateNote(note);

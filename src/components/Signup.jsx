@@ -45,8 +45,9 @@ const Signup = () => {
     }
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className='container my-3'>
+      <h2>Create a new account</h2>
+      <form className='my-3' onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">User Name</label>
                     <input name="username" value={credentials.username} onChange={handleChange} type="text" className="form-control" minLength={3} required />
