@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
-import {useNavigate} from 'react-router-dom'
+import React, { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import ThemeContext from '../context/themes/themeContext';
 
 const Login = () => {
     let [credentials, setCredentials] = useState({
@@ -7,19 +8,22 @@ const Login = () => {
         password: ""
     })
 
+    const tcontext = useContext(ThemeContext);
+    const {theme} = tcontext;
+
     let navigate = useNavigate();
 
-    const handleChange = (e)=>{
-        let {name, value} = e.target;
-        setCredentials((prevCredentials)=>{
-            return (credentials={
+    const handleChange = (e) => {
+        let { name, value } = e.target;
+        setCredentials((prevCredentials) => {
+            return (credentials = {
                 ...prevCredentials,
                 [name]: value
             })
         })
     }
 
-    const handleSubmit = async (e)=>{
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
         const response = await fetch(`http://localhost:5000/api/auth/login`, {
@@ -28,35 +32,38 @@ const Login = () => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(credentials)
-          });
+        });
 
         const json = await response.json();
-        if(json.success){
+        if (json.success) {
             localStorage.setItem('authToken', json.authToken)
-            navigate("/");
+            navigate("/home");
         }
-        else{
+        else {
             alert("login with correct credentials")
         }
-        
+
     }
 
     return (
-        <div className='container my-3'>
-        <h2>Login to iNotebook</h2>
-            <form className='my-4' onSubmit={handleSubmit}>
-                <div className="my-3">
-                    <label htmlFor="email" className="form-label">Email address</label>
-                    <input name="email" value={credentials.email} onChange={handleChange} type="email" className="form-control" aria-describedby="emailHelp" />
-                    <div className="form-text">We'll never share your email with anyone else.</div>
+        <main className="form-signin login w-200 m-auto">
+            <form onSubmit={handleSubmit} method="post">
+                <i className="fa-solid fa-envelope-open-text fa-2xl"></i>
+                <h1 className="h3 mb-3 fw-normal">Login to iNotebook</h1>
+                <div className="form-floating">
+                <input name="email" value={credentials.email} onChange={handleChange} type="email" className="form-control top" aria-describedby="emailHelp" />
+                    <label htmlFor="floatingInput" style={(theme === "black") && {color:"black"}}>Email address</label>
                 </div>
-                <div className="mb-3">
-                    <label htmlFor="password" className="form-label">Password</label>
-                    <input name='password' value={credentials.password} onChange={handleChange} type="password" className="form-control" />
+                <div className="form-floating">
+                <input name='password' value={credentials.password} onChange={handleChange} type="password" className="form-control bottom" />
+                    <label htmlFor="floatingInput" style={(theme === "black") && {color:"black"}}>Password</label>
                 </div>
-                <button type="submit" className="btn btn-primary">Submit</button>
+
+
+                <button className="w-200 btn btn-lg btn-primary" type="submit">Login</button>
+                <p className="mt-5 mb-3 text-muted">&copy; Aboli Deshmukh</p>
             </form>
-        </div>
+        </main>
     )
 }
 
