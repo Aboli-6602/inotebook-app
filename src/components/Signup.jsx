@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ThemeContext from '../context/themes/themeContext'
 
@@ -11,7 +11,13 @@ const Signup = () => {
     })
 
     const tcontext = useContext(ThemeContext);
-    const {theme} = tcontext;
+    const {style, changeTheme} = tcontext;
+
+    useEffect(() => {
+        if (localStorage.getItem('authToken') && localStorage.getItem('theme')) {
+          changeTheme(localStorage.getItem('theme'));
+        }
+    })
 
     const navigate = useNavigate();
 
@@ -51,23 +57,23 @@ const Signup = () => {
     return (
         <main className="form-signin signup w-200 m-auto">
             <form onSubmit={handleSubmit} method="post">
-                <i className="fa-solid fa-envelope-open-text fa-2xl"></i>
+            <i className="fa-solid fa-user fa-2xl"></i>
                 <h1 className="h3 mb-3 fw-normal">Create a new account</h1>
                 <div className="form-floating">
-                <input name="username" value={credentials.username} onChange={handleChange} type="text" className="form-control top" minLength={3} required />
-                    <label htmlFor="floatingInput" style={(theme === "black") && { color: "black" }}>Username</label>
+                <input name="username" value={credentials.username} onChange={handleChange} style={style.textArea} type="text" className="form-control top" minLength={3} required />
+                    <label htmlFor="floatingInput">Username</label>
                 </div>
                 <div className="form-floating">
-                <input name="email" value={credentials.email} onChange={handleChange} type="email" className="form-control middle" aria-describedby="emailHelp" required />
-                    <label htmlFor="floatingInput" style={(theme === "black") && { color: "black" }}>Email address</label>
+                <input name="email" value={credentials.email} onChange={handleChange} style={style.textArea} type="email" className="form-control middle" aria-describedby="emailHelp" required />
+                    <label htmlFor="floatingInput">Email address</label>
                 </div>
                 <div className="form-floating">
-                <input name='password' value={credentials.password} onChange={handleChange} type="password" className="form-control middle" minLength={5} required />
-                    <label htmlFor="floatingInput" style={(theme === "black") && { color: "black" }}>Password</label>
+                <input name='password' value={credentials.password} onChange={handleChange} style={style.textArea} type="password" className="form-control middle" minLength={5} required />
+                    <label htmlFor="floatingInput">Password</label>
                 </div>
                 <div className="form-floating">
-                <input name='cpassword' value={credentials.cpassword} onChange={handleChange} type="password" className="form-control bottom" required />
-                    <label htmlFor="floatingInput" style={(theme === "black") && { color: "black" }}>Confirm Password</label>
+                <input name='cpassword' value={credentials.cpassword} onChange={handleChange} style={style.textArea} type="password" className="form-control bottom" required />
+                    <label htmlFor="floatingInput" >Confirm Password</label>
                 </div>
 
 

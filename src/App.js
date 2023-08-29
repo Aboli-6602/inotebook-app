@@ -3,7 +3,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Home from './components/Home';
 import HomePage from './components/HomePage';
-import About from './components/About';
+import Newsletter from './components/Newsletter';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import NoteState from './context/notes/noteState';
@@ -19,8 +19,9 @@ import {
 function App() {
   return (
     <>
-      <NoteState>
-        <ThemeState>
+      <ThemeState>
+        <NoteState>
+
 
           <Router>
             <Navbar />
@@ -28,14 +29,15 @@ function App() {
               <Routes>
                 <Route exact path="/home" element={<Home />} />
                 <Route exact path="/" element={<HomePage />} />
-                <Route exact path="/newsletter" element={<About />} />
+                <Route exact path="/newsletter" element={<Newsletter />} />
                 <Route exact path="/login" element={<Login />} />
                 <Route exact path="/signup" element={<Signup />} />
               </Routes>
             </div>
           </Router>
-        </ThemeState>
-      </NoteState>
+
+        </NoteState>
+      </ThemeState>
     </>
   );
 }

@@ -1,7 +1,16 @@
-import React from 'react'
+import React, {useEffect, useContext} from 'react'
 import {Link} from 'react-router-dom'
+import ThemeContext from '../context/themes/themeContext';
 
 const HomePage = () => {
+  const tContext = useContext(ThemeContext);
+  const  {changeTheme} = tContext;
+
+  useEffect(() => {
+    if (localStorage.getItem('authToken') && localStorage.getItem('theme')) {
+      changeTheme(localStorage.getItem('theme'));
+    }
+})
 
   return (
     <div className='homePage'>
@@ -13,6 +22,7 @@ const HomePage = () => {
         <p>to make your own notes</p>
       </div>
       <img className='homeImg' src="https://images.unsplash.com/photo-1616593772450-6220bc809944?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1791&q=80" alt="notebook" />
+      <p className="mt-5 mb-3 text-muted" style={{textAlign: "center"}}>&copy; Aboli Deshmukh</p>
     </div>
   )
 }

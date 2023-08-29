@@ -13,7 +13,7 @@ const Navbar = () => {
   const allNotes = [];
 
   const tContext = useContext(ThemeContext);
-  const {theme, style} = tContext;
+  const {theme, style, changeTheme} = tContext;
 
   for(let i=0; i<notes.length; i++){
     allNotes[i] = notes[i];
@@ -21,6 +21,7 @@ const Navbar = () => {
 
   const handleLogout = ()=>{
     localStorage.removeItem("authToken");
+    changeTheme("white")
     Navigate("/login");
   }
 

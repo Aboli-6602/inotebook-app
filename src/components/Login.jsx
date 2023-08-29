@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ThemeContext from '../context/themes/themeContext';
 
@@ -9,7 +9,13 @@ const Login = () => {
     })
 
     const tcontext = useContext(ThemeContext);
-    const {theme} = tcontext;
+    const {style, changeTheme} = tcontext;
+
+    useEffect(() => {
+        if (localStorage.getItem('authToken') && localStorage.getItem('theme')) {
+          changeTheme(localStorage.getItem('theme'));
+        }
+    })
 
     let navigate = useNavigate();
 
@@ -48,15 +54,15 @@ const Login = () => {
     return (
         <main className="form-signin login w-200 m-auto">
             <form onSubmit={handleSubmit} method="post">
-                <i className="fa-solid fa-envelope-open-text fa-2xl"></i>
+            <i className="fa-solid fa-user fa-2xl"></i>
                 <h1 className="h3 mb-3 fw-normal">Login to iNotebook</h1>
                 <div className="form-floating">
-                <input name="email" value={credentials.email} onChange={handleChange} type="email" className="form-control top" aria-describedby="emailHelp" />
-                    <label htmlFor="floatingInput" style={(theme === "black") && {color:"black"}}>Email address</label>
+                <input name="email" value={credentials.email} onChange={handleChange} style={style.textArea} type="email" className="form-control top" aria-describedby="emailHelp" />
+                    <label htmlFor="floatingInput">Email address</label>
                 </div>
                 <div className="form-floating">
-                <input name='password' value={credentials.password} onChange={handleChange} type="password" className="form-control bottom" />
-                    <label htmlFor="floatingInput" style={(theme === "black") && {color:"black"}}>Password</label>
+                <input name='password' value={credentials.password} onChange={handleChange} style={style.textArea} type="password" className="form-control bottom" />
+                    <label htmlFor="floatingInput">Password</label>
                 </div>
 
 

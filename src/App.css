@@ -203,23 +203,6 @@ body{
   background-color: #141E27;
 }
 
-/* #addBtn {
-  padding: 0;
-  border: none;
-  font-family: "Architects Daughter", cursive;
-  text-decoration: none;
-  padding-bottom: 3px;
-  border-radius: 5px;
-  background-color: #97dece;
-}
-#addBtn span {
-  background: #f1f5f8;
-  display: block;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  border: 2px solid hsl(198, 1%, 29%);
-} */
-
 .bd-placeholder-img {
   font-size: 1.125rem;
   text-anchor: middle;
@@ -271,7 +254,7 @@ body{
   -webkit-overflow-scrolling: touch;
 }
 
-.fa-envelope-open-text{
+.fa-2xl{
   padding-bottom: 3rem;
 }
 
